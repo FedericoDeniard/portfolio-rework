@@ -1,56 +1,37 @@
-import { useState, useEffect, Fragment } from "react";
+import { Fragment } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export const NAV_ITEMS = [
-  { id: "about", label: "ABOUT", href: "#about" },
-  { id: "projects", label: "PROJECTS", href: "#projects" },
-  { id: "tech", label: "TECHNOLOGIES", href: "#tech" },
-  { id: "contact", label: "CONTACT", href: "#contact" },
+  { id: "about", label: "ABOUT" },
+  { id: "projects", label: "PROJECTS" },
+  { id: "tech", label: "TECHNOLOGIES" },
+  { id: "contact", label: "CONTACT" },
 ] as const;
 
 export type SectionId = (typeof NAV_ITEMS)[number]["id"];
-type ActiveSection = SectionId | null;
 
 export const Header = () => {
-  const getInitialSection = (): SectionId | null => {
-    const hash = window.location.hash.replace("#", "");
-    if (!NAV_ITEMS.some((item) => item.id === hash)) {
-      return null;
-    }
-    return hash as SectionId;
+  const navigate = useNavigate();
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    path: string
+  ) => {
+    e.preventDefault();
+    navigate(path, { state: { fromHeader: true } });
   };
-
-  const [activeSection, setActiveSection] =
-    useState<ActiveSection>(getInitialSection);
-
-  // Sincronizar con cambios en la URL
-  useEffect(() => {
-    const updateFromUrl = () => {
-      const hash = window.location.hash.replace("#", "") as ActiveSection;
-      if (
-        hash &&
-        hash !== activeSection &&
-        NAV_ITEMS.some((item) => item.id === hash)
-      ) {
-        setActiveSection(hash);
-      } else {
-        setActiveSection(null);
-      }
-    };
-
-    window.addEventListener("hashchange", updateFromUrl);
-    return () => window.removeEventListener("hashchange", updateFromUrl);
-  }, [activeSection]);
 
   return (
     <header className="w-full p-4 flex justify-center fixed top-4 z-50 font-secondary">
       <nav className="w-full max-w-5xl flex justify-between items-center">
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
-          <a
-            href="#about"
+          <NavLink
+            to="/about"
+            onClick={(e) => handleNavClick(e, "/about")}
             className="text-white font-bold text-lg tracking-wider"
           >
             Federico Deniard
-          </a>
+          </NavLink>
         </div>
 
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-6 py-2 border border-white/10">
@@ -59,16 +40,19 @@ export const Header = () => {
               <Fragment key={item.id}>
                 {index > 0 && <li className="px-2 text-gray-500">•</li>}
                 <li>
-                  <a
-                    href={item.href}
-                    className={`${
-                      activeSection === item.id
-                        ? "text-white font-semibold"
-                        : "text-gray-300"
-                    } hover:text-white transition-colors`}
+                  <NavLink
+                    to={`/${item.id}`}
+                    onClick={(e) => handleNavClick(e, `/${item.id}`)}
+                    className={({ isActive }) =>
+                      `px-4 py-2 rounded-full transition-colors ${
+                        isActive
+                          ? "bg-white/10 text-white"
+                          : "text-gray-300 hover:text-white"
+                      }`
+                    }
                   >
                     {item.label}
-                  </a>
+                  </NavLink>
                 </li>
               </Fragment>
             ))}
@@ -83,9 +67,13 @@ export const Header = () => {
             <span className="text-white mx-1">EN</span>
           </div>
           <div className="bg-indigo-600 hover:bg-indigo-700 transition-colors rounded-full px-4 py-2 text-xs font-bold tracking-wider">
-            <a href="#contact" className="text-white">
+            <NavLink
+              to="/contact"
+              onClick={(e) => handleNavClick(e, "/contact")}
+              className="text-white"
+            >
               CONTACT US
-            </a>
+            </NavLink>
           </div>
         </div>
       </nav>

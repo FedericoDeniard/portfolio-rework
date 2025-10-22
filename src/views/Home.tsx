@@ -1,26 +1,66 @@
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import Header, { NAV_ITEMS, type SectionId } from "../components/layout/Header";
 import "./Home.css";
 
 function Home() {
-  // Crear un observer para cada sección
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { sectionId: urlSectionId } = useParams<{ sectionId?: SectionId }>();
+  const hasMounted = useRef(false);
+  const shouldScrollOnMount = useRef(false);
+  const isProgrammaticScroll = useRef(false);
+
+  // Detectar si es la primera carga con una URL específica
+  useEffect(() => {
+    if (!hasMounted.current && urlSectionId) {
+      shouldScrollOnMount.current = true;
+    }
+    hasMounted.current = true;
+  }, []);
+
+  // Scroll solo en montaje inicial o cuando location.state indica click del header
+  useEffect(() => {
+    const shouldScroll =
+      (shouldScrollOnMount.current && urlSectionId) ||
+      (location.state as { fromHeader?: boolean })?.fromHeader;
+
+    if (shouldScroll && urlSectionId) {
+      isProgrammaticScroll.current = true;
+      shouldScrollOnMount.current = false;
+
+      const element = document.getElementById(urlSectionId);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+          behavior: "smooth",
+        });
+      }
+
+      const timer = setTimeout(() => {
+        isProgrammaticScroll.current = false;
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [urlSectionId, location.state]);
+
+  // Crear observer para cada sección
   const createSectionObserver = (id: SectionId) => {
-    const [ref, inView] = useInView({
+    const { ref } = useInView({
       threshold: 0.5,
-      rootMargin: '-80px 0px 0px 0px',
-      triggerOnce: false,
+      onChange: (inView) => {
+        if (inView && !isProgrammaticScroll.current) {
+          const currentPath = window.location.pathname.slice(1);
+          if (currentPath !== id) {
+            navigate(`/${id}`, { replace: true });
+          }
+        }
+      },
     });
 
-    // Efecto que se ejecuta cuando la visibilidad de la sección cambia
-    useEffect(() => {
-      if (inView && id !== window.location.hash.replace('#', '')) {
-        window.history.replaceState({}, '', `#${id}`);
-        window.dispatchEvent(new Event('hashchange'));
-      }
-    }, [inView, id]);
-
-    return { ref };
+    return ref;
   };
 
   return (
@@ -28,7 +68,7 @@ function Home() {
       <Header />
       {/* Secciones de navegación */}
       {NAV_ITEMS.map((item) => {
-        const { ref } = createSectionObserver(item.id as SectionId);
+        const ref = createSectionObserver(item.id as SectionId);
         return (
           <section
             key={item.id}
