@@ -45,7 +45,7 @@ export const Header = () => {
           <ul className="flex items-center text-xs font-medium">
             {NAV_ITEMS.map((item, index) => (
               <Fragment key={item.id}>
-                {index > 0 && <li className="px-2 text-gray-500">•</li>}
+                {index > 0 && <li className="px-2 text-gray-500">|</li>}
                 <li>
                   <NavLink
                     to={`/${item.id}`}
