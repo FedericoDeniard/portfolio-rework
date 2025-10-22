@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import "../../styles/wave-effect.css";
 
 export const NAV_ITEMS = [
   { id: "about", label: "ABOUT" },
@@ -30,15 +31,14 @@ export const Header = () => {
   return (
     <header className="w-full p-4 flex justify-center fixed top-4 z-50 font-secondary">
       <nav className="w-full max-w-5xl flex justify-between items-center">
-        <div className="group bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 relative overflow-hidden">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-full border border-white/10">
           <NavLink
             to="/about"
             onClick={(e) => handleNavClick(e, "/about")}
-            className="text-white font-bold text-lg tracking-wider"
+            className="text-white font-bold text-lg tracking-wider block px-4 py-2 wave-container name-hover rounded-full"
           >
-            <span className="relative z-10 transition-colors duration-300 group-hover:text-gray-900">{t('nav.title')}</span>
+            <span className="wave-text">{t('nav.title')}</span>
           </NavLink>
-          <span className="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-300 group-hover:h-full"></span>
         </div>
 
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-6 py-2 border border-white/10">
@@ -80,15 +80,14 @@ export const Header = () => {
               EN
             </span>
           </div>
-          <div className="group bg-indigo-600 transition-colors rounded-full relative overflow-hidden">
+          <div className="bg-indigo-600 rounded-full">
             <NavLink
               to="/contact"
               onClick={(e) => handleNavClick(e, "/contact")}
-              className="text-white block px-4 py-2 text-xs font-bold tracking-wider"
+              className="text-white block px-4 py-2 text-xs font-bold tracking-wider wave-container contact-hover rounded-full"
             >
-              <span className="relative z-10 transition-colors duration-300 group-hover:text-indigo-600">{t('nav.contact_us')}</span>
+              <span className="wave-text">{t('nav.contact_us')}</span>
             </NavLink>
-            <span className="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-300 group-hover:h-full"></span>
           </div>
         </div>
       </nav>

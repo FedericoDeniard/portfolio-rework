@@ -1,0 +1,36 @@
+.wave-container {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.wave-text {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+}
+
+.wave-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 1;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.wave-container:hover::before {
+  transform: translateY(0);
+}
+
+.wave-container.name-hover:hover .wave-text {
+  color: #1f2937; /* gray-800 */
+}
+
+.wave-container.contact-hover:hover .wave-text {
+  color: #4338ca; /* indigo-600 */
+}
