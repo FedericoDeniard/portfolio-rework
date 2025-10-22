@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import "../../styles/wave-effect.css";
 
@@ -15,6 +16,7 @@ export type SectionId = (typeof NAV_ITEMS)[number]["id"];
 export const Header = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -41,28 +43,33 @@ export const Header = () => {
           </NavLink>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-6 py-2 border border-white/10">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-2 border border-white/10">
           <ul className="flex items-center text-xs font-medium">
-            {NAV_ITEMS.map((item, index) => (
-              <Fragment key={item.id}>
-                {index > 0 && <li className="px-2 text-gray-500">|</li>}
-                <li>
-                  <NavLink
-                    to={`/${item.id}`}
-                    onClick={(e) => handleNavClick(e, `/${item.id}`)}
-                    className={({ isActive }) =>
-                      `px-4 py-2 rounded-full transition-colors ${
-                        isActive
-                          ? "bg-white/10 text-white"
-                          : "text-gray-300 hover:text-white"
-                      }`
-                    }
-                  >
-                    {t(`nav.${item.id}`)}
-                  </NavLink>
-                </li>
-              </Fragment>
-            ))}
+            {NAV_ITEMS.map((item, index) => {
+              const isActive = location.pathname === `/${item.id}`;
+              return (
+                <Fragment key={item.id}>
+                  {index > 0 && <li className="px-2 text-gray-500">|</li>}
+                  <li className="relative py-2">
+                    <NavLink
+                      to={`/${item.id}`}
+                      onClick={(e) => handleNavClick(e, `/${item.id}`)}
+                      className={`relative px-4 transition-colors ${
+                        isActive ? "text-white" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {t(`nav.${item.id}`)}
+                    </NavLink>
+                    {isActive && (
+                      <motion.span
+                        layoutId="underline"
+                        className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                      />
+                    )}
+                  </li>
+                </Fragment>
+              );
+            })}
           </ul>
         </div>
 
