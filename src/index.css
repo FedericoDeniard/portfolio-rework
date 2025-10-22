@@ -3,6 +3,10 @@
 :root {
   --font-primary: 'Roboto', sans-serif;
   --font-secondary: 'Poppins', sans-serif;
+  --color-palette-1: #FE8577;
+  --color-palette-2: #C6BAFF;
+  --color-palette-3: #6AF7BB;
+  --color-palette-4: #FFFFFF;
 }
 
 body {

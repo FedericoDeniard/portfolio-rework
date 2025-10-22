@@ -2,16 +2,7 @@ import { Fragment } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import "../../styles/wave-effect.css";
-
-export const NAV_ITEMS = [
-  { id: "about", label: "ABOUT" },
-  { id: "projects", label: "PROJECTS" },
-  { id: "tech", label: "TECHNOLOGIES" },
-  { id: "contact", label: "CONTACT" },
-] as const;
-
-export type SectionId = (typeof NAV_ITEMS)[number]["id"];
+import { NAV_ITEMS } from "../../constants/navigation";
 
 export const Header = () => {
   const { t, i18n } = useTranslation();
@@ -33,7 +24,7 @@ export const Header = () => {
   return (
     <header className="w-full p-4 flex justify-center fixed top-4 z-50 font-secondary">
       <nav className="w-full max-w-5xl flex justify-between items-center">
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-full border border-white/10">
+        <div className="bg-[var(--color-palette-2)]/70 backdrop-blur-sm rounded-full border border-gray-500/80 shadow-lg">
           <NavLink
             to="/about"
             onClick={(e) => handleNavClick(e, "/about")}
@@ -43,7 +34,7 @@ export const Header = () => {
           </NavLink>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-2 border border-white/10">
+        <div className="bg-[var(--color-palette-2)]/70 backdrop-blur-sm rounded-full px-2 border border-gray-500/80 shadow-lg">
           <ul className="flex items-center text-xs font-medium">
             {NAV_ITEMS.map((item, index) => {
               const isActive = location.pathname === `/${item.id}`;
@@ -55,7 +46,7 @@ export const Header = () => {
                       to={`/${item.id}`}
                       onClick={(e) => handleNavClick(e, `/${item.id}`)}
                       className={`relative px-4 transition-colors ${
-                        isActive ? "text-white" : "text-gray-300 hover:text-white"
+                        isActive ? "text-white" : "text-gray-600 hover:text-white"
                       }`}
                     >
                       {t(`nav.${item.id}`)}
@@ -63,7 +54,7 @@ export const Header = () => {
                     {isActive && (
                       <motion.span
                         layoutId="underline"
-                        className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                        className="absolute inset-0 bg-white/20 rounded-full -z-10"
                       />
                     )}
                   </li>
@@ -74,20 +65,20 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center space-x-2">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 text-xs font-medium">
+          <div className="bg-[var(--color-palette-2)]/70 backdrop-blur-sm rounded-full px-4 py-2 border border-gray-500/80 text-xs font-medium shadow-lg">
             <span
               onClick={() => changeLanguage('es')}
-              className={`cursor-pointer hover:text-white transition-colors ${i18n.language === 'es' ? 'text-white' : 'text-gray-500'}`}>
+              className={`cursor-pointer hover:text-white transition-colors ${i18n.language === 'es' ? 'text-white' : 'text-gray-500 hover:text-white'}`}>
               ES
             </span>
             <span className="text-gray-500 mx-1">/</span>
             <span
               onClick={() => changeLanguage('en')}
-              className={`cursor-pointer hover:text-white transition-colors ${i18n.language === 'en' ? 'text-white' : 'text-gray-500'}`}>
+              className={`cursor-pointer hover:text-white transition-colors ${i18n.language === 'en' ? 'text-white' : 'text-gray-500 hover:text-white'}`}>
               EN
             </span>
           </div>
-          <div className="bg-indigo-600 rounded-full">
+          <div className="bg-[var(--color-palette-2)]/70 backdrop-blur-sm rounded-full border border-gray-500/80 shadow-lg">
             <NavLink
               to="/contact"
               onClick={(e) => handleNavClick(e, "/contact")}

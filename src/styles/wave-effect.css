@@ -18,9 +18,10 @@
   width: 100%;
   height: 100%;
   background-color: white;
-  z-index: 1;
+  z-index: 5;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  pointer-events: none;
 }
 
 .wave-container:hover::before {
@@ -28,9 +29,9 @@
 }
 
 .wave-container.name-hover:hover .wave-text {
-  color: #1f2937; /* gray-800 */
+  color: var(--color-palette-2);
 }
 
 .wave-container.contact-hover:hover .wave-text {
-  color: #4338ca; /* indigo-600 */
+  color: var(--color-palette-2);
 }

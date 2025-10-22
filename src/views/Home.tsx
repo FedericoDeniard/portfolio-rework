@@ -2,7 +2,8 @@ import { useInView } from "react-intersection-observer";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useRef, memo } from "react";
 import { useTranslation } from "react-i18next";
-import Header, { NAV_ITEMS, type SectionId } from "../components/layout/Header";
+import Header from "../components/layout/Header";
+import { NAV_ITEMS, type SectionId } from "../constants/navigation";
 import "./Home.css";
 
 const Section = memo(
@@ -33,9 +34,9 @@ const Section = memo(
       <section
         id={id}
         ref={ref}
-        className="min-h-screen w-full flex items-center justify-center"
+        className="min-h-screen w-full flex items-center justify-center bg-[var(--color-palette-4)]"
       >
-        <h2 className="text-3xl font-bold">{label}</h2>
+        <h2 className="text-3xl font-bold text-gray-800">{label}</h2>
       </section>
     );
   }
@@ -73,7 +74,7 @@ function Home() {
     return (
     <>
       <Header />
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map((item: { id: SectionId; label: string }) => (
         <Section
           key={item.id}
           id={item.id}
