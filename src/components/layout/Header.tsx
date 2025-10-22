@@ -1,21 +1,14 @@
 import { useState, useEffect, Fragment } from "react";
 
-type SectionId = "about" | "projects" | "tech" | "contact";
-
-interface NavItem {
-  id: SectionId;
-  label: string;
-  href: string;
-}
-
-type ActiveSection = SectionId | null;
-
-export const NAV_ITEMS: NavItem[] = [
+export const NAV_ITEMS = [
   { id: "about", label: "ABOUT", href: "#about" },
   { id: "projects", label: "PROJECTS", href: "#projects" },
   { id: "tech", label: "TECHNOLOGIES", href: "#tech" },
   { id: "contact", label: "CONTACT", href: "#contact" },
-];
+] as const;
+
+export type SectionId = (typeof NAV_ITEMS)[number]["id"];
+type ActiveSection = SectionId | null;
 
 export const Header = () => {
   const getInitialSection = (): SectionId | null => {

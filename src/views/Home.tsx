@@ -1,36 +1,45 @@
-import { useState } from 'react';
-import viteLogo from '/vite.svg';
-import Header from '../components/layout/Header'; // Corrected import path
-import './Home.css';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import Header, { NAV_ITEMS, type SectionId } from "../components/layout/Header";
+import "./Home.css";
 
 function Home() {
-  const [count, setCount] = useState(0);
+  // Crear un observer para cada sección
+  const createSectionObserver = (id: SectionId) => {
+    const [ref, inView] = useInView({
+      threshold: 0.5,
+      rootMargin: '-80px 0px 0px 0px',
+      triggerOnce: false,
+    });
+
+    // Efecto que se ejecuta cuando la visibilidad de la sección cambia
+    useEffect(() => {
+      if (inView && id !== window.location.hash.replace('#', '')) {
+        window.history.replaceState({}, '', `#${id}`);
+        window.dispatchEvent(new Event('hashchange'));
+      }
+    }, [inView, id]);
+
+    return { ref };
+  };
 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center pt-20">
-        <div className="flex items-center space-x-4 mb-8">
-          <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} className="h-24 w-24" alt="Vite logo" />
-          </a>
-        </div>
-        <h1 className="font-secondary text-5xl font-bold mb-4">Vite + React</h1>
-        <div className="p-8 bg-gray-800 rounded-lg shadow-lg text-center">
-          <button
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg mb-4"
-            onClick={() => setCount((count) => count + 1)}
+      {/* Secciones de navegación */}
+      {NAV_ITEMS.map((item) => {
+        const { ref } = createSectionObserver(item.id as SectionId);
+        return (
+          <section
+            key={item.id}
+            id={item.id}
+            ref={ref}
+            className="min-h-screen w-full flex items-center justify-center"
           >
-            count is {count}
-          </button>
-          <p className="mb-4">
-            Edit <code>src/views/Home.tsx</code> and save to test HMR
-          </p>
-          <p className="text-gray-400">
-            Click on the Vite and React logos to learn more
-          </p>
-        </div>
-      </main>
+            <h2 className="text-3xl font-bold">{item.label}</h2>
+          </section>
+        );
+      })}
     </>
   );
 }
