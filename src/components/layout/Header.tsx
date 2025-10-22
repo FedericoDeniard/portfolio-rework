@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const NAV_ITEMS = [
   { id: "about", label: "ABOUT" },
@@ -11,7 +12,12 @@ export const NAV_ITEMS = [
 export type SectionId = (typeof NAV_ITEMS)[number]["id"];
 
 export const Header = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -30,7 +36,7 @@ export const Header = () => {
             onClick={(e) => handleNavClick(e, "/about")}
             className="text-white font-bold text-lg tracking-wider"
           >
-            Federico Deniard
+            {t('nav.title')}
           </NavLink>
         </div>
 
@@ -51,7 +57,7 @@ export const Header = () => {
                       }`
                     }
                   >
-                    {item.label}
+                    {t(`nav.${item.id}`)}
                   </NavLink>
                 </li>
               </Fragment>
@@ -61,10 +67,17 @@ export const Header = () => {
 
         <div className="flex items-center space-x-2">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 text-xs font-medium">
-            <span className="text-gray-500 cursor-pointer hover:text-white transition-colors">
+            <span
+              onClick={() => changeLanguage('es')}
+              className={`cursor-pointer hover:text-white transition-colors ${i18n.language === 'es' ? 'text-white' : 'text-gray-500'}`}>
               ES
             </span>
-            <span className="text-white mx-1">EN</span>
+            <span className="text-gray-500 mx-1">/</span>
+            <span
+              onClick={() => changeLanguage('en')}
+              className={`cursor-pointer hover:text-white transition-colors ${i18n.language === 'en' ? 'text-white' : 'text-gray-500'}`}>
+              EN
+            </span>
           </div>
           <div className="bg-indigo-600 hover:bg-indigo-700 transition-colors rounded-full px-4 py-2 text-xs font-bold tracking-wider">
             <NavLink
@@ -72,7 +85,7 @@ export const Header = () => {
               onClick={(e) => handleNavClick(e, "/contact")}
               className="text-white"
             >
-              CONTACT US
+              {t('nav.contact_us')}
             </NavLink>
           </div>
         </div>

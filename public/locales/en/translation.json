@@ -1,0 +1,11 @@
+{
+  "greeting": "Hello World",
+  "nav": {
+    "about": "ABOUT",
+    "projects": "PROJECTS",
+    "tech": "TECHNOLOGIES",
+    "contact": "CONTACT",
+    "contact_us": "CONTACT US",
+    "title": "Federico Deniard"
+  }
+}

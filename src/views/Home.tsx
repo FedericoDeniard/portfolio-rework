@@ -1,6 +1,7 @@
 import { useInView } from "react-intersection-observer";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useRef, memo } from "react";
+import { useTranslation } from "react-i18next";
 import Header, { NAV_ITEMS, type SectionId } from "../components/layout/Header";
 import "./Home.css";
 
@@ -41,6 +42,7 @@ const Section = memo(
 );
 
 function Home() {
+  const { t } = useTranslation();
   const location = useLocation();
   const { sectionId: urlSectionId } = useParams<{ sectionId?: SectionId }>();
   const isProgrammaticScroll = useRef(false);
@@ -68,14 +70,14 @@ function Home() {
     isFirstRender.current = false;
   }, [urlSectionId, location.state]);
 
-  return (
+    return (
     <>
       <Header />
       {NAV_ITEMS.map((item) => (
         <Section
           key={item.id}
           id={item.id}
-          label={item.label}
+          label={t(`nav.${item.id}`)}
           isProgrammaticScroll={isProgrammaticScroll}
         />
       ))}
