@@ -30,14 +30,15 @@ export const Header = () => {
   return (
     <header className="w-full p-4 flex justify-center fixed top-4 z-50 font-secondary">
       <nav className="w-full max-w-5xl flex justify-between items-center">
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+        <div className="group bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10 relative overflow-hidden">
           <NavLink
             to="/about"
             onClick={(e) => handleNavClick(e, "/about")}
             className="text-white font-bold text-lg tracking-wider"
           >
-            {t('nav.title')}
+            <span className="relative z-10 transition-colors duration-300 group-hover:text-gray-900">{t('nav.title')}</span>
           </NavLink>
+          <span className="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-300 group-hover:h-full"></span>
         </div>
 
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-full px-6 py-2 border border-white/10">
@@ -79,14 +80,15 @@ export const Header = () => {
               EN
             </span>
           </div>
-          <div className="bg-indigo-600 hover:bg-indigo-700 transition-colors rounded-full px-4 py-2 text-xs font-bold tracking-wider">
+          <div className="group bg-indigo-600 transition-colors rounded-full relative overflow-hidden">
             <NavLink
               to="/contact"
               onClick={(e) => handleNavClick(e, "/contact")}
-              className="text-white"
+              className="text-white block px-4 py-2 text-xs font-bold tracking-wider"
             >
-              {t('nav.contact_us')}
+              <span className="relative z-10 transition-colors duration-300 group-hover:text-indigo-600">{t('nav.contact_us')}</span>
             </NavLink>
+            <span className="absolute bottom-0 left-0 w-full h-0 bg-white transition-all duration-300 group-hover:h-full"></span>
           </div>
         </div>
       </nav>
