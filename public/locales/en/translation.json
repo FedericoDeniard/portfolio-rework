@@ -7,5 +7,9 @@
     "contact": "CONTACT",
     "contact_us": "CONTACT US",
     "title": "Federico Deniard"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Hi! I'm Federico, a passionate software developer with experience in creating modern and efficient web applications. I love learning new technologies and facing challenges that allow me to grow professionally."
   }
 }
