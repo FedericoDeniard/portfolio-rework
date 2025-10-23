@@ -3,7 +3,6 @@ import Header from "../components/layout/Header";
 import About from "./about/About";
 import SectionWrapper from "../components/layout/SectionWrapper";
 import { NAV_ITEMS, type SectionId } from "../constants/navigation";
-import "./Home.css";
 
 function Home() {
   const { t } = useTranslation();
