@@ -43,3 +43,37 @@
 .wave-container.contact-hover:hover .wave-text {
   color: var(--color-palette-2);
 }
+
+/* Always-on thin wave, visually identical to header wave but continuous */
+@keyframes wave-scan {
+  0%   { transform: translateX(-200%) translateY(-200%) rotate(45deg); }
+  50%  { transform: translateX(0%)     translateY(0%)     rotate(45deg); }
+  100% { transform: translateX(200%)  translateY(200%)  rotate(45deg); }
+}
+
+.wave-always {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-always::before {
+  content: "";
+  position: absolute;
+  /* extra-long, thin band centered on the diagonal */
+  width: 400%;
+  height: 12%;
+  top: -6%;
+  left: -150%;
+  /* use the exact same gradient as header */
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+  z-index: 1;
+  /* start visually centered */
+  transform: translateX(0%) translateY(0%) rotate(45deg);
+  transform-origin: center;
+  animation: wave-scan 4.2s linear infinite;
+  /* jump to mid-cycle so first frame is centered */
+  animation-delay: -1.6s;
+  animation-fill-mode: both;
+  border-radius: inherit;
+  pointer-events: none;
+}

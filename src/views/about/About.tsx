@@ -8,13 +8,13 @@ const About = () => {
     <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto p-8">
       <div className="relative w-64 h-64 md:w-80 md:h-80">
         {/* Purple background shape */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[85%] bg-[var(--color-palette-2)] rounded-3xl"></div>
+        <div className="wave-always !absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[85%] bg-[var(--color-palette-2)] rounded-3xl z-0"></div>
 
         {/* Image that pops out */}
         <img
           src={me}
           alt="Federico Deniard"
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[110%] w-auto object-contain filter drop-shadow-xl"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[110%] w-auto object-contain filter drop-shadow-xl z-10"
         />
       </div>
 
@@ -29,3 +29,4 @@ const About = () => {
 };
 
 export default About;
+
