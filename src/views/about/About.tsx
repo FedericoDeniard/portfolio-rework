@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import me from "../../assets/me-no-bg.png";
+import clave from "../../assets/clave.svg";
 
 const About = () => {
   const { t } = useTranslation();
@@ -18,11 +19,22 @@ const About = () => {
         />
       </div>
 
-      <div className="flex-1 mt-8 md:mt-0">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">
-          {t("about.title")}
-        </h2>
-        <p className="text-lg text-gray-600">{t("about.description")}</p>
+      <div className="flex-1 mt-8 md:mt-0 relative">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `repeating-linear-gradient(black 0, black 2px, transparent 2px, transparent 20%), url(${clave})`,
+            backgroundRepeat: "repeat, no-repeat",
+            backgroundPosition: "center, left",
+            backgroundSize: "auto, contain",
+          }}
+        ></div>
+        <div className="relative z-10 p-4">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            {t("about.title")}
+          </h2>
+          <p className="text-lg text-gray-600">{t("about.description")}</p>
+        </div>
       </div>
     </div>
   );
