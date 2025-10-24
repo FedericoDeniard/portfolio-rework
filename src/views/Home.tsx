@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/layout/Header";
 import About from "./about/About";
 import SectionWrapper from "../components/layout/SectionWrapper";
-import "../styles/grid-pattern.css";
 import { NAV_ITEMS, type SectionId } from "../constants/navigation";
 
 function Home() {
@@ -15,7 +14,7 @@ function Home() {
         <SectionWrapper
           key={item.id}
           id={item.id}
-          className="min-h-screen w-full flex items-center justify-center grid-pattern"
+          className="min-h-screen w-full flex items-center justify-center"
         >
           {item.id === "about" ? (
             <About />
