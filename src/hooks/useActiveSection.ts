@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { NAV_ITEMS } from '../constants/navigation';
+import { useSectionRefs } from '../context/SectionRefsContext';
 
 export const useActiveSection = () => {
   const [activeSection, setActiveSection] = useState<string>('about');
-    const observer = useRef<IntersectionObserver | null>(null);
+    const { sectionRefs } = useSectionRefs();
+  const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     observer.current = new IntersectionObserver(
@@ -17,17 +18,18 @@ export const useActiveSection = () => {
       { threshold: 0.5 } 
     );
 
-    const sections = NAV_ITEMS.map(({ id }) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
-    sections.forEach((section) => {
-      observer.current?.observe(section);
-    });
+    const currentRefs = sectionRefs.map(ref => ref.current).filter(Boolean) as HTMLElement[];
+
+    if (observer.current) {
+      currentRefs.forEach(section => observer.current?.observe(section));
+    }
 
     return () => {
-      sections.forEach((section) => {
-        observer.current?.unobserve(section);
-      });
+      if (observer.current) {
+        currentRefs.forEach(section => observer.current?.unobserve(section));
+      }
     };
-  }, []);
+  }, [sectionRefs]);
 
   return activeSection;
 };

@@ -6,12 +6,16 @@ interface SectionWrapperProps {
   className?: string;
 }
 
-const SectionWrapper: React.FC<SectionWrapperProps> = ({ children, id, className }) => {
+const SectionWrapper = React.forwardRef<HTMLElement, SectionWrapperProps>(
+  ({ children, id, className }, ref) => {
   return (
-    <section id={id} className={className}>
+    <section ref={ref} id={id} className={className}>
       {children}
     </section>
   );
-};
+  }
+);
+
+SectionWrapper.displayName = 'SectionWrapper';
 
 export default SectionWrapper;

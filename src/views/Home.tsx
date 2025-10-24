@@ -1,20 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, createRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { useParams } from 'react-router-dom';
 import { useScrollToSection } from '../hooks/useScrollToSection';
+import SectionRefsContext from '../context/SectionRefsContext';
 import Header from "../components/layout/Header";
 import About from "./about/About";
 import SectionWrapper from "../components/layout/SectionWrapper";
-import { NAV_ITEMS, type SectionId } from "../constants/navigation";
+import { NAV_ITEMS } from "../constants/navigation";
 
 function Home() {
   const { t } = useTranslation();
   const { sectionId } = useParams<{ sectionId: string }>();
   const { scrollToSection } = useScrollToSection();
 
+  const sectionRefs = useRef(NAV_ITEMS.map(() => createRef<HTMLElement>()));
+
   useEffect(() => {
     if (sectionId) {
-      // We need a small delay to ensure the sections are rendered before scrolling
       setTimeout(() => {
         scrollToSection(sectionId);
       }, 100);
@@ -22,11 +24,12 @@ function Home() {
   }, [sectionId, scrollToSection]);
 
   return (
-    <>
+    <SectionRefsContext.Provider value={{ sectionRefs: sectionRefs.current }}>
       <Header />
-      {NAV_ITEMS.map((item: { id: SectionId; label: string }) => (
+      {NAV_ITEMS.map((item, index) => (
         <SectionWrapper
           key={item.id}
+          ref={sectionRefs.current[index]}
           id={item.id}
           className="min-h-screen w-full flex items-center justify-center"
         >
@@ -39,7 +42,7 @@ function Home() {
           )}
         </SectionWrapper>
       ))}
-    </>
+    </SectionRefsContext.Provider>
   );
 }
 
