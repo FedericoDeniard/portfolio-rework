@@ -1,0 +1,5 @@
+.grid-pattern {
+  background-color: var(--color-palette-4);
+  background-image: linear-gradient(var(--color-palette-2) 1px, transparent 1px), linear-gradient(to right, var(--color-palette-2) 1px, var(--color-palette-4) 1px);
+  background-size: 20px 20px;
+}

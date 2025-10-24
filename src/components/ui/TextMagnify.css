@@ -1,0 +1,16 @@
+.text-magnify-word {
+  display: inline-block;
+}
+
+.text-magnify-letter {
+  display: inline-block;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  cursor: default;
+}
+
+.text-magnify-letter:hover {
+  transform: scale(var(--magnify-scale, 2));
+}
