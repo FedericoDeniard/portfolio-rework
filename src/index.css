@@ -1,5 +1,11 @@
-@import "tailwindcss";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 @import "./styles/wave-effect.css";
+
+html {
+  scroll-behavior: smooth;
+}
 
 :root {
   --font-primary: 'Roboto', sans-serif;
