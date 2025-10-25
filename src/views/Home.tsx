@@ -5,6 +5,7 @@ import { useScrollToSection } from '../hooks/useScrollToSection';
 import SectionRefsContext from '../context/SectionRefsContext';
 import Header from "../components/layout/Header";
 import About from "./about/About";
+import Tech from "./tech/Tech";
 import SectionWrapper from "../components/layout/SectionWrapper";
 import { NAV_ITEMS } from "../constants/navigation";
 
@@ -35,6 +36,8 @@ function Home() {
         >
           {item.id === "about" ? (
             <About />
+          ) : item.id === "tech" ? (
+            <Tech />
           ) : (
             <h2 className="text-3xl font-bold text-gray-800">
               {t(`nav.${item.id}`)}

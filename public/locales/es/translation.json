@@ -12,5 +12,10 @@
     "title": "Federico Deniard",
     "position": "Desarrollador Fullstack",
     "description": "Desarrollador Full Stack enfocado en construir soluciones completas y bien pensadas. Me interesa tanto la arquitectura y la eficiencia del backend como la experiencia del usuario en el frontend. Busco mejorar en cada proyecto, entendiendo por qué las cosas funcionan y cómo puedo hacerlas mejor."
+  },
+  "tech": {
+    "title": "Tecnologías",
+    "subtitle": "Herramientas y Tecnologías con las que Trabajo",
+    "description": "Siempre aprendiendo y explorando nuevas tecnologías para construir mejores soluciones."
   }
 }
